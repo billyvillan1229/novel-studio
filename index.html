@@ -27,11 +27,11 @@ dialog{width:min(92vw,520px);border:1px solid var(--line);border-radius:18px;bac
 </style>
 </head>
 <body>
-<header><div><div class="eyebrow">YOUR CREATIVE WORKSPACE</div><h1>Novel Studio</h1></div><button id="theme" class="icon" aria-label="Toggle theme">◐</button></header>
+<header><div><div class="eyebrow">YOUR CREATIVE WORKSPACE</div><h1>Novel Studio</h1></div><button id="theme" class="icon" aria-label="Toggle theme">â</button></header>
 <nav><button class="active" data-tab="write">Write</button><button data-tab="world">Worldbuilding</button><button data-tab="listen">Listen</button><button data-tab="library">Library & Backup</button></nav>
 <main>
 <section class="view active" id="write">
- <div class="head"><div><div class="eyebrow">MANUSCRIPT</div><h2>Writing Studio</h2></div><button id="addChapter" class="primary">＋ Chapter</button></div>
+ <div class="head"><div><div class="eyebrow">MANUSCRIPT</div><h2>Writing Studio</h2></div><button id="addChapter" class="primary">ï¼ Chapter</button></div>
  <div class="layout">
   <aside class="card side"><label for="project">Project name</label><input id="project" class="project" maxlength="80"><div class="row"><span class="eyebrow">CHAPTERS</span><span id="chapterTotal" class="muted small"></span></div><div id="chapters" class="list"></div><button id="importText" class="secondary full">Import TXT / MD</button><input id="textFile" type="file" accept=".txt,.md,text/plain" hidden></aside>
   <div class="card editor">
@@ -48,7 +48,7 @@ dialog{width:min(92vw,520px);border:1px solid var(--line);border-radius:18px;bac
  </div>
 </section>
 <section class="view" id="world">
- <div class="head"><div><div class="eyebrow">STORY BIBLE</div><h2>Worldbuilding</h2></div><button id="addEntry" class="primary">＋ Entry</button></div>
+ <div class="head"><div><div class="eyebrow">STORY BIBLE</div><h2>Worldbuilding</h2></div><button id="addEntry" class="primary">ï¼ Entry</button></div>
  <p class="muted small">Build a searchable reference library for characters, places, factions, magic and history.</p>
  <div class="toolbar"><input id="searchEntry" placeholder="Search names and descriptions"><select id="filterEntry"><option>All types</option><option>Character</option><option>Location</option><option>Faction</option><option>Magic</option><option>History</option><option>Other</option></select></div>
  <div id="entries" class="grid"></div>
@@ -56,11 +56,11 @@ dialog{width:min(92vw,520px);border:1px solid var(--line);border-radius:18px;bac
 <section class="view" id="listen">
  <div class="eyebrow">TEXT-TO-SPEECH</div><h2>Listen to your manuscript</h2><p class="muted small">Uses speech voices supplied by your browser/device. Select a chapter in Writing Studio first.</p>
  <div class="card player">
-  <div class="art">♫</div><h3 id="nowTitle">No chapter selected</h3><div id="nowProject" class="muted small">Your project</div>
+  <div class="art">â«</div><h3 id="nowTitle">No chapter selected</h3><div id="nowProject" class="muted small">Your project</div>
   <div class="field" style="text-align:left;margin-top:20px"><label for="voice">Voice</label><select id="voice"></select></div>
-  <div class="row"><label for="rate" class="muted small">Reading speed</label><span id="rateLabel" class="small">1.0×</span></div><input id="rate" type="range" min=".65" max="1.8" step=".05" value="1">
+  <div class="row"><label for="rate" class="muted small">Reading speed</label><span id="rateLabel" class="small">1.0Ã</span></div><input id="rate" type="range" min=".65" max="1.8" step=".05" value="1">
   <div class="progress"><div id="progress"></div></div><div id="position" class="muted small">Ready</div>
-  <div class="controls"><button id="restart" class="round secondary" title="Restart">↺</button><button id="toggleSpeech" class="play" title="Play">▶</button><button id="stop" class="round secondary" title="Stop">■</button></div>
+  <div class="controls"><button id="restart" class="round secondary" title="Restart">âº</button><button id="toggleSpeech" class="play" title="Play">â¶</button><button id="stop" class="round secondary" title="Stop">â </button></div>
   <div id="speechLine" class="small muted">The current sentence will appear here.</div>
  </div>
  <p class="muted small">iPhone note: Safari's speech engine may pause or stop when the app is backgrounded or the screen locks. Reliable audiobook-style lock-screen playback requires a native iOS app; this web version cannot guarantee it.</p>
@@ -73,7 +73,7 @@ dialog{width:min(92vw,520px);border:1px solid var(--line);border-radius:18px;bac
 </section>
 </main>
 <dialog id="entryDialog"><form id="entryForm">
- <div class="dlghead"><h3 id="entryHeading">New worldbuilding entry</h3><button type="button" class="icon" id="closeDialog">✕</button></div>
+ <div class="dlghead"><h3 id="entryHeading">New worldbuilding entry</h3><button type="button" class="icon" id="closeDialog">â</button></div>
  <div class="dlgfield"><label for="entryName">Name</label><input id="entryName" required maxlength="100"></div>
  <div class="dlgfield"><label for="entryType">Category</label><select id="entryType"><option>Character</option><option>Location</option><option>Faction</option><option>Magic</option><option>History</option><option>Other</option></select></div>
  <div class="dlgfield"><label for="entryDesc">Description and notes</label><textarea id="entryDesc" rows="7"></textarea></div>
@@ -90,8 +90,8 @@ let selected=db.chapters[0]?.id||null,editId=null,saveTimer=null,speechParts=[],
 const $=id=>document.getElementById(id);
 function current(){return db.chapters.find(c=>c.id===selected)}
 function toast(s){const t=$("toast");t.textContent=s;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
-function save(){const c=current();if(c){c.title=$("chapterTitle").value;c.body=$("body").value;c.pov=$("pov").value;c.status=$("status").value;c.notes=$("chapterNotes").value}db.project=$("project").value||"My Novel";try{localStorage.setItem(KEY,JSON.stringify(db));$("saveState").textContent="Saved on this device";$("storageSummary").textContent=`${db.chapters.length} chapters · ${db.entries.length} worldbuilding entries · Browser storage`}catch(e){$("saveState").textContent="Storage full — export a backup";toast("Browser storage may be full. Export a backup.")}}
-function queueSave(){ $("saveState").textContent="Saving…";clearTimeout(saveTimer);saveTimer=setTimeout(()=>{save();renderChapters()},300)}
+function save(){const c=current();if(c){c.title=$("chapterTitle").value;c.body=$("body").value;c.pov=$("pov").value;c.status=$("status").value;c.notes=$("chapterNotes").value}db.project=$("project").value||"My Novel";try{localStorage.setItem(KEY,JSON.stringify(db));$("saveState").textContent="Saved on this device";$("storageSummary").textContent=`${db.chapters.length} chapters Â· ${db.entries.length} worldbuilding entries Â· Browser storage`}catch(e){$("saveState").textContent="Storage full â export a backup";toast("Browser storage may be full. Export a backup.")}}
+function queueSave(){ $("saveState").textContent="Savingâ¦";clearTimeout(saveTimer);saveTimer=setTimeout(()=>{save();renderChapters()},300)}
 function wc(s){return (s.trim().match(/\S+/g)||[]).length}
 function updateWords(){$("words").textContent=wc($("body").value).toLocaleString()+" words"}
 function renderChapters(){let el=$("chapters");el.innerHTML="";db.chapters.forEach(c=>{let b=document.createElement("button");b.className="item"+(c.id===selected?" active":"");b.textContent=c.title||"Untitled";b.onclick=()=>select(c.id);el.append(b)});$("chapterTotal").textContent=db.chapters.length}
@@ -100,11 +100,11 @@ function renderEntries(){const q=$("searchEntry").value.toLowerCase(),f=$("filte
 function openEntry(id){editId=id;let e=db.entries.find(x=>x.id===id);$("entryHeading").textContent=e?"Edit entry":"New entry";$("entryName").value=e?.name||"";$("entryType").value=e?.type||"Character";$("entryDesc").value=e?.desc||"";$("entryDialog").showModal()}
 function download(blob,name){let u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function exportChapter(){let c=current();if(c)download(new Blob([c.body],{type:"text/plain;charset=utf-8"}),(c.title||"chapter").replace(/[^\w -]/g,"")+".txt")}
-function stopSpeech(){if("speechSynthesis"in window)speechSynthesis.cancel();isSpeaking=false;$("toggleSpeech").textContent="▶";$("position").textContent="Stopped"}
-function splitSentences(text){return text.replace(/\r/g,"").split(/\n+/).flatMap(p=>{p=p.trim();if(!p)return[];return p.match(/[^.!?]+(?:[.!?]+["'”’)]*|$)/g)||[p]}).map(x=>x.trim()).filter(Boolean)}
-function loadVoices(){let sel=$("voice");if(!("speechSynthesis"in window)){sel.innerHTML="<option>Not supported in this browser</option>";return}let vs=speechSynthesis.getVoices();let old=sel.value;sel.innerHTML="";vs.forEach((v,i)=>{let o=document.createElement("option");o.value=i;o.textContent=`${v.name} — ${v.lang}`;sel.append(o)});if(old)sel.value=old}
-function speakPart(){if(!isSpeaking||speechIndex>=speechParts.length){if(speechIndex>=speechParts.length){isSpeaking=false;$("toggleSpeech").textContent="▶";$("position").textContent="Finished";$("progress").style.width="100%"}return}let part=speechParts[speechIndex],u=new SpeechSynthesisUtterance(part),voices=speechSynthesis.getVoices(),v=voices[Number($("voice").value)];if(v)u.voice=v;u.rate=Number($("rate").value);$("speechLine").textContent=part;$("position").textContent=`Sentence ${speechIndex+1} of ${speechParts.length}`;$("progress").style.width=((speechIndex+1)/speechParts.length*100)+"%";u.onend=()=>{speechIndex++;speakPart()};u.onerror=()=>{isSpeaking=false;$("toggleSpeech").textContent="▶";$("position").textContent="Playback interrupted"};speechSynthesis.speak(u)}
-function startSpeech(){let c=current();if(!c?.body.trim()){toast("This chapter has no text yet.");return}if(!("speechSynthesis"in window)){toast("Speech synthesis is unavailable.");return}speechSynthesis.cancel();speechParts=splitSentences(c.body);speechIndex=0;isSpeaking=true;$("toggleSpeech").textContent="Ⅱ";speakPart()}
+function stopSpeech(){if("speechSynthesis"in window)speechSynthesis.cancel();isSpeaking=false;$("toggleSpeech").textContent="â¶";$("position").textContent="Stopped"}
+function splitSentences(text){return text.replace(/\r/g,"").split(/\n+/).flatMap(p=>{p=p.trim();if(!p)return[];return p.match(/[^.!?]+(?:[.!?]+["'ââ)]*|$)/g)||[p]}).map(x=>x.trim()).filter(Boolean)}
+function loadVoices(){let sel=$("voice");if(!("speechSynthesis"in window)){sel.innerHTML="<option>Not supported in this browser</option>";return}let vs=speechSynthesis.getVoices();let old=sel.value;sel.innerHTML="";vs.forEach((v,i)=>{let o=document.createElement("option");o.value=i;o.textContent=`${v.name} â ${v.lang}`;sel.append(o)});if(old)sel.value=old}
+function speakPart(){if(!isSpeaking||speechIndex>=speechParts.length){if(speechIndex>=speechParts.length){isSpeaking=false;$("toggleSpeech").textContent="â¶";$("position").textContent="Finished";$("progress").style.width="100%"}return}let part=speechParts[speechIndex],u=new SpeechSynthesisUtterance(part),voices=speechSynthesis.getVoices(),v=voices[Number($("voice").value)];if(v)u.voice=v;u.rate=Number($("rate").value);$("speechLine").textContent=part;$("position").textContent=`Sentence ${speechIndex+1} of ${speechParts.length}`;$("progress").style.width=((speechIndex+1)/speechParts.length*100)+"%";u.onend=()=>{speechIndex++;speakPart()};u.onerror=()=>{isSpeaking=false;$("toggleSpeech").textContent="â¶";$("position").textContent="Playback interrupted"};speechSynthesis.speak(u)}
+function startSpeech(){let c=current();if(!c?.body.trim()){toast("This chapter has no text yet.");return}if(!("speechSynthesis"in window)){toast("Speech synthesis is unavailable.");return}speechSynthesis.cancel();speechParts=splitSentences(c.body);speechIndex=0;isSpeaking=true;$("toggleSpeech").textContent="â¡";speakPart()}
 function setTab(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));if(id==="listen")loadVoices()}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
 $("theme").onclick=()=>{document.body.classList.toggle("light");localStorage.setItem("novelStudioTheme",document.body.classList.contains("light")?"light":"dark")};
@@ -119,8 +119,8 @@ $("textFile").onchange=async e=>{let f=e.target.files[0];if(!f)return;let c={id:
 $("addEntry").onclick=()=>openEntry(null);$("closeDialog").onclick=$("cancelDialog").onclick=()=>$("entryDialog").close();
 $("entryForm").onsubmit=e=>{e.preventDefault();let obj={id:editId||uid(),name:$("entryName").value.trim(),type:$("entryType").value,desc:$("entryDesc").value};if(!obj.name)return;if(editId)db.entries=db.entries.map(x=>x.id===editId?obj:x);else db.entries.unshift(obj);save();renderEntries();$("entryDialog").close();toast("Entry saved")};
 $("searchEntry").oninput=renderEntries;$("filterEntry").onchange=renderEntries;
-$("rate").oninput=e=>$("rateLabel").textContent=Number(e.target.value).toFixed(2).replace(/0$/,"")+"×";
-$("toggleSpeech").onclick=()=>{if(!("speechSynthesis"in window))return;if(isSpeaking&&speechSynthesis.speaking&&!speechSynthesis.paused){speechSynthesis.pause();$("toggleSpeech").textContent="▶";$("position").textContent="Paused"}else if(speechSynthesis.paused){speechSynthesis.resume();$("toggleSpeech").textContent="Ⅱ";isSpeaking=true}else if(isSpeaking){speakPart()}else startSpeech()};
+$("rate").oninput=e=>$("rateLabel").textContent=Number(e.target.value).toFixed(2).replace(/0$/,"")+"Ã";
+$("toggleSpeech").onclick=()=>{if(!("speechSynthesis"in window))return;if(isSpeaking&&speechSynthesis.speaking&&!speechSynthesis.paused){speechSynthesis.pause();$("toggleSpeech").textContent="â¶";$("position").textContent="Paused"}else if(speechSynthesis.paused){speechSynthesis.resume();$("toggleSpeech").textContent="â¡";isSpeaking=true}else if(isSpeaking){speakPart()}else startSpeech()};
 $("stop").onclick=stopSpeech;$("restart").onclick=()=>{stopSpeech();startSpeech()};
 $("backup").onclick=()=>{save();let payload={app:"Novel Studio",version:2,exportedAt:new Date().toISOString(),...db};download(new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),(db.project||"novel").replace(/[^\w-]/g,"_")+"_backup.json");toast("Backup downloaded")};
 $("exportAllTxt").onclick=()=>{save();let txt=db.chapters.map(c=>`${c.title}\n${"=".repeat(Math.min(40,(c.title||"Chapter").length))}\n\n${c.body}\n\n\n`).join("");download(new Blob([txt],{type:"text/plain;charset=utf-8"}),(db.project||"novel")+"_manuscript.txt")};
